@@ -80,7 +80,7 @@ search, Q&A retrieval — joins through it, so access control lives in one place
    cycles; PageRank for "central" files; fan-in/out.
 5. **Rules** (`rules.py`) — deterministic findings (table below), each with a fix suggestion.
 6. **Duplicates** (`duplicates.py`) — function bodies → normalised tokens (identifiers `$`, literals `#`),
-   6-token shingles, 128-permutation MinHash, LSH banding (32×4), Jaccard ≥ 0.8.
+   shingles of six consecutive tokens, MinHash with 128 permutations, LSH banding (32×4), Jaccard ≥ 0.8.
 7. **Chunk** (`chunking.py`) — one chunk per function/method (long ones in 60-line windows that repeat
    the signature), one summary chunk per class, module-level code in windows, text files in windows.
    Full-text indexing uses *expanded* text: `calculateOrderTotal` also indexes as "calculate order total".
