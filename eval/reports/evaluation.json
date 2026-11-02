@@ -1,0 +1,489 @@
+{
+ "generated_by": "python -m app.cli evaluate",
+ "config": {
+  "embedding_model": "BAAI/bge-small-en-v1.5",
+  "reranker_model": "Xenova/ms-marco-MiniLM-L-6-v2",
+  "answer_provider": "offline",
+  "min_rerank_relevance": 0.01
+ },
+ "corpus": {
+  "symbols_indexed": 663,
+  "demo_files": 61,
+  "questions": 47,
+  "unreadable_repository_present": true
+ },
+ "structure": {
+  "findings": {
+   "overall": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "tp": 21,
+    "fp": 0,
+    "fn": 0
+   },
+   "per_rule": {
+    "dangerous-eval": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    },
+    "dangerous-html": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    },
+    "dead-code": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "tp": 3,
+     "fp": 0,
+     "fn": 0
+    },
+    "deep-nesting": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    },
+    "duplicate-code": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "tp": 2,
+     "fp": 0,
+     "fn": 0
+    },
+    "hardcoded-secret": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    },
+    "high-complexity": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "tp": 3,
+     "fp": 0,
+     "fn": 0
+    },
+    "import-cycle": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    },
+    "insecure-deserialization": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    },
+    "long-function": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    },
+    "shell-injection": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    },
+    "sql-injection": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "tp": 2,
+     "fp": 0,
+     "fn": 0
+    },
+    "swallowed-exception": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    },
+    "tls-verification-disabled": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    },
+    "too-many-parameters": {
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    }
+   },
+   "false_positives": [],
+   "missed": []
+  },
+  "call_graph": {
+   "callers": 27,
+   "edges": 78,
+   "overall": {
+    "precision": 1.0,
+    "recall": 0.8974358974358975,
+    "f1": 0.945945945945946,
+    "tp": 70,
+    "fp": 0,
+    "fn": 8
+   },
+   "precision_by_resolution": {
+    "import": {
+     "correct": 36,
+     "total": 36,
+     "precision": 1.0
+    },
+    "local": {
+     "correct": 20,
+     "total": 20,
+     "precision": 1.0
+    },
+    "self": {
+     "correct": 3,
+     "total": 3,
+     "precision": 1.0
+    },
+    "unique-method": {
+     "correct": 11,
+     "total": 11,
+     "precision": 1.0
+    }
+   },
+   "wrong": [],
+   "missed": [
+    "fernwood/auth/service.py::_register_failure -> fernwood/customers/repository.py::CustomerRepository.save",
+    "fernwood/orders/service.py::place_order -> fernwood/catalog/products.py::ProductRepository.get",
+    "fernwood/orders/service.py::place_order -> fernwood/orders/repository.py::OrderRepository.save",
+    "fernwood/orders/service.py::cancel_order -> fernwood/orders/repository.py::OrderRepository.get",
+    "fernwood/orders/service.py::cancel_order -> fernwood/orders/repository.py::OrderRepository.save",
+    "fernwood/api/routes.py::current_customer -> fernwood/customers/repository.py::CustomerRepository.get",
+    "fernwood/reports/sales.py::daily_sales_report -> fernwood/catalog/products.py::ProductRepository.get",
+    "web/src/api/client.ts::login -> web/src/api/client.ts::apiFetch"
+   ]
+  },
+  "cycles": {
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0
+  },
+  "analysis_ms": 163,
+  "stats": {
+   "files": 61,
+   "code_files": 56,
+   "test_files": 4,
+   "loc": 1152,
+   "code_loc": 1122,
+   "languages": {
+    "text": {
+     "files": 5,
+     "loc": 30
+    },
+    "python": {
+     "files": 47,
+     "loc": 884
+    },
+    "go": {
+     "files": 3,
+     "loc": 113
+    },
+    "typescript": {
+     "files": 4,
+     "loc": 98
+    },
+    "tsx": {
+     "files": 2,
+     "loc": 27
+    }
+   },
+   "functions": 120,
+   "classes": 25,
+   "avg_complexity": 2.28,
+   "max_complexity": 21,
+   "calls": 443,
+   "resolved_calls": 148,
+   "external_packages": {
+    "requests": 4,
+    "fastapi": 2,
+    "pytest": 2,
+    "psycopg": 1,
+    "react": 1
+   },
+   "findings": {
+    "low": 8,
+    "high": 7,
+    "medium": 6
+   },
+   "findings_by_category": {
+    "reliability": 1,
+    "security": 8,
+    "maintainability": 11,
+    "design": 1
+   },
+   "import_cycles": 1,
+   "public_functions": 91,
+   "public_functions_called_from_tests": 12,
+   "health": 94,
+   "grade": "A",
+   "syntax_errors": 0
+  }
+ },
+ "impact": {
+  "changed": {
+   "expected": 3,
+   "found": 3,
+   "correct": 3,
+   "missed": [],
+   "unexpected": []
+  },
+  "added": {
+   "expected": 2,
+   "found": 2,
+   "correct": 2,
+   "missed": [],
+   "unexpected": []
+  },
+  "removed": {
+   "expected": 1,
+   "found": 1,
+   "correct": 1,
+   "missed": [],
+   "unexpected": []
+  },
+  "impacted": {
+   "expected": 2,
+   "found": 2,
+   "correct": 2,
+   "missed": [],
+   "unexpected": []
+  },
+  "tests_to_run": {
+   "expected": 3,
+   "found": 3,
+   "correct": 3,
+   "missed": [],
+   "unexpected": []
+  },
+  "new_findings": {
+   "expected": 2,
+   "found": 2,
+   "correct": 2,
+   "missed": [],
+   "unexpected": []
+  },
+  "fixed_findings": {
+   "expected": 2,
+   "found": 2,
+   "correct": 2,
+   "missed": [],
+   "unexpected": []
+  },
+  "risk": {
+   "score": 46,
+   "level": "medium",
+   "reasons": [
+    {
+     "points": 13,
+     "reason": "3 changed and 2 added functions"
+    },
+    {
+     "points": 6,
+     "reason": "1 changed functions have complexity above 10"
+    },
+    {
+     "points": 4,
+     "reason": "2 other functions call the changed code (up to 3 hops)"
+    },
+    {
+     "points": 20,
+     "reason": "1 new high and 1 new medium severity findings"
+    },
+    {
+     "points": 3,
+     "reason": "1 changed functions are not reached by any test"
+    }
+   ]
+  }
+ },
+ "retrieval": {
+  "questions": 40,
+  "modes": {
+   "keyword": {
+    "recall@1": 0.475,
+    "recall@3": 0.725,
+    "recall@5": 0.825,
+    "recall@10": 0.9,
+    "mrr": 0.6150297619047619,
+    "mrr_by_kind": {
+     "identifier": 0.5285714285714286,
+     "natural": 0.6579861111111112,
+     "paraphrase": 0.5606060606060606
+    },
+    "median_latency_ms": 42.5
+   },
+   "vector": {
+    "recall@1": 0.65,
+    "recall@3": 0.925,
+    "recall@5": 0.95,
+    "recall@10": 0.975,
+    "mrr": 0.7879166666666667,
+    "mrr_by_kind": {
+     "identifier": 1.0,
+     "natural": 0.7951388888888888,
+     "paraphrase": 0.6757575757575758
+    },
+    "median_latency_ms": 39.6
+   },
+   "hybrid": {
+    "recall@1": 0.65,
+    "recall@3": 0.85,
+    "recall@5": 0.925,
+    "recall@10": 0.95,
+    "mrr": 0.7645833333333333,
+    "mrr_by_kind": {
+     "identifier": 0.9,
+     "natural": 0.7986111111111112,
+     "paraphrase": 0.6287878787878788
+    },
+    "median_latency_ms": 43.5
+   },
+   "hybrid + re-rank": {
+    "recall@1": 0.675,
+    "recall@3": 0.875,
+    "recall@5": 0.925,
+    "recall@10": 0.95,
+    "mrr": 0.789375,
+    "mrr_by_kind": {
+     "identifier": 1.0,
+     "natural": 0.7864583333333334,
+     "paraphrase": 0.7
+    },
+    "median_latency_ms": 3581.6
+   }
+  }
+ },
+ "qa": {
+  "provider": "offline",
+  "location_accuracy": 0.8,
+  "false_refusal_rate": 0.125,
+  "correct_refusal_rate": 1.0,
+  "leakage": 0,
+  "by_kind": {
+   "natural": {
+    "n": 24,
+    "located": 21,
+    "refused": 1
+   },
+   "paraphrase": {
+    "n": 11,
+    "located": 6,
+    "refused": 4
+   },
+   "identifier": {
+    "n": 5,
+    "located": 5,
+    "refused": 0
+   },
+   "unanswerable": {
+    "n": 7,
+    "located": 0,
+    "refused": 7
+   }
+  },
+  "median_latency_ms": 3587,
+  "failures": [
+   {
+    "question": "Where are customer passwords hashed?",
+    "status": "answered",
+    "cited": [
+     "fernwood/auth/service.py::authenticate",
+     "fernwood/customers/repository.py::CustomerRepository",
+     "fernwood/customers/repository.py::CustomerRepository.update_password_hash"
+    ],
+    "best_relevance": 0.9883
+   },
+   {
+    "question": "How do we know if a product can still be bought or is sold out?",
+    "status": "not_found",
+    "cited": [],
+    "best_relevance": 0.0004
+   },
+   {
+    "question": "How do we convert an amount from euros to dollars?",
+    "status": "not_found",
+    "cited": [],
+    "best_relevance": 0.0094
+   },
+   {
+    "question": "How is a product name turned into a URL?",
+    "status": "not_found",
+    "cited": [],
+    "best_relevance": 0.0073
+   },
+   {
+    "question": "Can every destination get overnight delivery?",
+    "status": "not_found",
+    "cited": [],
+    "best_relevance": 0.0023
+   },
+   {
+    "question": "How are prices displayed in the web shop?",
+    "status": "not_found",
+    "cited": [],
+    "best_relevance": 0.0023
+   },
+   {
+    "question": "Where is the database connection opened?",
+    "status": "answered",
+    "cited": [
+     "services/shipping/tracking/tracking.go::"
+    ],
+    "best_relevance": 0.0118
+   },
+   {
+    "question": "How do we text a customer?",
+    "status": "answered",
+    "cited": [
+     "fernwood/auth/service.py::authenticate",
+     "fernwood/customers/repository.py::CustomerRepository._one",
+     "fernwood/notifications/email.py::send_cancellation"
+    ],
+    "best_relevance": 0.1319
+   }
+  ]
+ },
+ "seconds": 309.3
+}

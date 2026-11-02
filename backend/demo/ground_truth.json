@@ -1,0 +1,219 @@
+{
+  "_about": "Hand-labelled answers for the fictional fernwood-shop repository (v1, and the v1 -> v2 change). Written from reading the demo code, before running the analyser. Symbols are 'path::qualified name'.",
+  "findings": [
+    {"rule": "hardcoded-secret", "symbol": "fernwood/payments/gateway.py::"},
+    {"rule": "sql-injection", "symbol": "fernwood/orders/repository.py::OrderRepository.search_orders"},
+    {"rule": "sql-injection", "symbol": "services/shipping/tracking/tracking.go::TrackShipment"},
+    {"rule": "dangerous-eval", "symbol": "fernwood/reports/sales.py::apply_custom_metric"},
+    {"rule": "insecure-deserialization", "symbol": "fernwood/payments/webhooks.py::handle_webhook"},
+    {"rule": "shell-injection", "symbol": "fernwood/notifications/email.py::send_email"},
+    {"rule": "tls-verification-disabled", "symbol": "fernwood/shipping/client.py::quote_shipping"},
+    {"rule": "dangerous-html", "symbol": "web/src/components/ProductDescription.tsx::ProductDescription"},
+    {"rule": "swallowed-exception", "symbol": "fernwood/inventory/stock.py::release_stock"},
+    {"rule": "high-complexity", "symbol": "fernwood/orders/service.py::place_order"},
+    {"rule": "high-complexity", "symbol": "fernwood/reports/sales.py::daily_sales_report"},
+    {"rule": "high-complexity", "symbol": "services/shipping/rates/rates.go::CalculateRate"},
+    {"rule": "long-function", "symbol": "fernwood/reports/sales.py::daily_sales_report"},
+    {"rule": "deep-nesting", "symbol": "fernwood/reports/sales.py::daily_sales_report"},
+    {"rule": "too-many-parameters", "symbol": "fernwood/orders/service.py::place_order"},
+    {"rule": "import-cycle", "symbol": "fernwood/inventory/stock.py::"},
+    {"rule": "dead-code", "symbol": "fernwood/pricing/discounts.py::legacy_discount"},
+    {"rule": "dead-code", "symbol": "fernwood/utils/text.py::_strip_accents_old"},
+    {"rule": "dead-code", "symbol": "fernwood/inventory/stock.py::reserve_order"},
+    {"rule": "duplicate-code", "symbol": "fernwood/customers/validation.py::normalize_phone"},
+    {"rule": "duplicate-code", "symbol": "fernwood/notifications/sms.py::_normalize_number"}
+  ],
+  "cycles": [["fernwood/inventory/stock.py", "fernwood/orders/service.py"]],
+  "call_graph": {
+    "fernwood/auth/service.py::authenticate": [
+      "fernwood/customers/repository.py::CustomerRepository.get_by_email",
+      "fernwood/auth/service.py::AuthenticationError",
+      "fernwood/auth/passwords.py::verify_password",
+      "fernwood/auth/service.py::_register_failure",
+      "fernwood/auth/passwords.py::needs_rehash",
+      "fernwood/customers/repository.py::CustomerRepository.update_password_hash",
+      "fernwood/auth/passwords.py::hash_password",
+      "fernwood/auth/service.py::_reset_failures",
+      "fernwood/auth/tokens.py::create_access_token"
+    ],
+    "fernwood/auth/service.py::_register_failure": [
+      "fernwood/config.py::load_settings",
+      "fernwood/customers/repository.py::CustomerRepository.save"
+    ],
+    "fernwood/auth/tokens.py::create_access_token": [
+      "fernwood/config.py::load_settings",
+      "fernwood/auth/tokens.py::_b64",
+      "fernwood/auth/tokens.py::_sign"
+    ],
+    "fernwood/auth/tokens.py::decode_token": [
+      "fernwood/config.py::load_settings",
+      "fernwood/auth/tokens.py::TokenError",
+      "fernwood/auth/tokens.py::_sign"
+    ],
+    "fernwood/orders/service.py::calculate_order_total": [
+      "fernwood/pricing/discounts.py::apply_discounts",
+      "fernwood/pricing/tax.py::calculate_tax"
+    ],
+    "fernwood/orders/service.py::place_order": [
+      "fernwood/orders/service.py::OrderError",
+      "fernwood/orders/models.py::Order",
+      "fernwood/catalog/products.py::ProductRepository.get",
+      "fernwood/inventory/stock.py::check_availability",
+      "fernwood/orders/models.py::OrderLine",
+      "fernwood/orders/service.py::calculate_order_total",
+      "fernwood/inventory/stock.py::reserve_stock",
+      "fernwood/payments/gateway.py::PaymentGateway.charge",
+      "fernwood/inventory/stock.py::release_stock",
+      "fernwood/orders/repository.py::OrderRepository.save",
+      "fernwood/notifications/email.py::send_order_confirmation"
+    ],
+    "fernwood/orders/service.py::cancel_order": [
+      "fernwood/orders/repository.py::OrderRepository.get",
+      "fernwood/orders/service.py::OrderError",
+      "fernwood/payments/gateway.py::PaymentGateway.refund",
+      "fernwood/inventory/stock.py::release_stock",
+      "fernwood/orders/repository.py::OrderRepository.save",
+      "fernwood/notifications/email.py::send_cancellation"
+    ],
+    "fernwood/payments/gateway.py::PaymentGateway.charge": [
+      "fernwood/payments/gateway.py::PaymentGateway._post",
+      "fernwood/payments/gateway.py::PaymentDeclined"
+    ],
+    "fernwood/notifications/email.py::send_order_confirmation": [
+      "fernwood/pricing/currency.py::format_money",
+      "fernwood/notifications/email.py::render_template",
+      "fernwood/notifications/email.py::send_email"
+    ],
+    "fernwood/api/routes.py::create_order": ["fernwood/orders/service.py::place_order"],
+    "fernwood/api/routes.py::login": ["fernwood/auth/service.py::authenticate"],
+    "fernwood/api/routes.py::current_customer": [
+      "fernwood/auth/tokens.py::decode_token",
+      "fernwood/customers/repository.py::CustomerRepository.get"
+    ],
+    "fernwood/catalog/search.py::search_products": [
+      "fernwood/catalog/search.py::tokenize",
+      "fernwood/catalog/products.py::ProductRepository.all_active"
+    ],
+    "fernwood/reports/sales.py::daily_sales_report": [
+      "fernwood/pricing/currency.py::convert",
+      "fernwood/catalog/products.py::ProductRepository.get",
+      "fernwood/reports/sales.py::apply_custom_metric",
+      "fernwood/pricing/currency.py::format_money"
+    ],
+    "fernwood/inventory/stock.py::reserve_stock": [
+      "fernwood/inventory/warehouse.py::WarehouseClient.reserve",
+      "fernwood/inventory/stock.py::OutOfStock"
+    ],
+    "fernwood/notifications/sms.py::send_sms": [
+      "fernwood/notifications/sms.py::_normalize_number",
+      "fernwood/notifications/provider.py::MessagingClient.send_message"
+    ],
+    "fernwood/customers/repository.py::CustomerRepository.get_by_email": [
+      "fernwood/customers/repository.py::CustomerRepository._one"
+    ],
+    "fernwood/customers/repository.py::CustomerRepository._one": [
+      "fernwood/db.py::Database.fetch_one",
+      "fernwood/customers/models.py::Customer"
+    ],
+    "fernwood/dependencies.py::get_customers": [
+      "fernwood/dependencies.py::get_database",
+      "fernwood/customers/repository.py::CustomerRepository"
+    ],
+    "fernwood/cli.py::main": [
+      "fernwood/dependencies.py::get_orders",
+      "fernwood/orders/repository.py::OrderRepository.list_for_day",
+      "fernwood/reports/sales.py::daily_sales_report",
+      "fernwood/dependencies.py::get_products",
+      "fernwood/reports/sales.py::export_csv",
+      "fernwood/notifications/provider.py::MessagingClient",
+      "fernwood/notifications/sms.py::send_sms"
+    ],
+    "web/src/checkout/checkout.ts::submitOrder": [
+      "web/src/cart/cart.ts::Cart.totalCents",
+      "web/src/checkout/checkout.ts::CheckoutError",
+      "web/src/api/client.ts::placeOrder",
+      "web/src/cart/cart.ts::Cart.toOrderItems"
+    ],
+    "web/src/api/client.ts::login": ["web/src/api/client.ts::apiFetch"],
+    "web/src/api/client.ts::placeOrder": ["web/src/api/client.ts::apiFetch"],
+    "web/src/cart/cart.ts::Cart.summary": [
+      "web/src/cart/cart.ts::Cart.totalCents",
+      "web/src/utils/format.ts::formatPrice"
+    ],
+    "web/src/components/SearchBox.tsx::SearchBox.submit": ["web/src/api/client.ts::searchProducts"],
+    "services/shipping/main.go::handleRates": ["services/shipping/rates/rates.go::CalculateRate"],
+    "services/shipping/main.go::handleTracking": ["services/shipping/tracking/tracking.go::TrackShipment"]
+  },
+  "questions": [
+    {"q": "Where are customer passwords hashed?", "kind": "natural", "expect": ["fernwood/auth/passwords.py::hash_password", "fernwood/auth/passwords.py::_derive"]},
+    {"q": "How do we check that a login password is correct?", "kind": "paraphrase", "expect": ["fernwood/auth/passwords.py::verify_password"]},
+    {"q": "How are access tokens signed and verified?", "kind": "natural", "expect": ["fernwood/auth/tokens.py::create_access_token", "fernwood/auth/tokens.py::decode_token", "fernwood/auth/tokens.py::_sign"]},
+    {"q": "What happens after too many failed login attempts?", "kind": "paraphrase", "expect": ["fernwood/auth/service.py::authenticate", "fernwood/auth/service.py::_register_failure"]},
+    {"q": "How is sales tax calculated for an order?", "kind": "natural", "expect": ["fernwood/pricing/tax.py::calculate_tax"]},
+    {"q": "Where is the order total computed?", "kind": "natural", "expect": ["fernwood/orders/service.py::calculate_order_total"]},
+    {"q": "How are loyalty points turned into a discount?", "kind": "paraphrase", "expect": ["fernwood/pricing/discounts.py::loyalty_discount"]},
+    {"q": "When does the November seasonal sale discount apply?", "kind": "natural", "expect": ["fernwood/pricing/discounts.py::seasonal_discount"]},
+    {"q": "What happens to reserved stock when a card payment is declined?", "kind": "paraphrase", "expect": ["fernwood/orders/service.py::place_order", "fernwood/inventory/stock.py::release_stock"]},
+    {"q": "How does the payment gateway retry failed requests?", "kind": "natural", "expect": ["fernwood/payments/gateway.py::PaymentGateway._post"]},
+    {"q": "How are payment webhook signatures verified?", "kind": "natural", "expect": ["fernwood/payments/webhooks.py::verify_signature"]},
+    {"q": "How is an order cancelled and refunded?", "kind": "natural", "expect": ["fernwood/orders/service.py::cancel_order"]},
+    {"q": "Where do we send the order confirmation e-mail?", "kind": "natural", "expect": ["fernwood/notifications/email.py::send_order_confirmation"]},
+    {"q": "How are phone numbers normalised?", "kind": "natural", "expect": ["fernwood/customers/validation.py::normalize_phone", "fernwood/notifications/sms.py::_normalize_number"]},
+    {"q": "How do we know if a product can still be bought or is sold out?", "kind": "paraphrase", "expect": ["fernwood/inventory/stock.py::check_availability", "fernwood/inventory/warehouse.py::WarehouseClient.available"]},
+    {"q": "How are product search results ranked?", "kind": "natural", "expect": ["fernwood/catalog/search.py::search_products"]},
+    {"q": "Where is the daily sales report generated?", "kind": "natural", "expect": ["fernwood/reports/sales.py::daily_sales_report"]},
+    {"q": "How do we export a sales report as CSV?", "kind": "natural", "expect": ["fernwood/reports/sales.py::export_csv"]},
+    {"q": "How is money formatted on receipts?", "kind": "natural", "expect": ["fernwood/pricing/currency.py::format_money"]},
+    {"q": "How do we convert an amount from euros to dollars?", "kind": "paraphrase", "expect": ["fernwood/pricing/currency.py::convert"]},
+    {"q": "How is a product name turned into a URL?", "kind": "paraphrase", "expect": ["fernwood/utils/text.py::slugify"]},
+    {"q": "How is the shipping price of a parcel calculated?", "kind": "natural", "expect": ["services/shipping/rates/rates.go::CalculateRate", "fernwood/shipping/client.py::quote_shipping"]},
+    {"q": "Can every destination get overnight delivery?", "kind": "paraphrase", "expect": ["services/shipping/rates/rates.go::CalculateRate"]},
+    {"q": "How do we look up the tracking history of a shipment?", "kind": "natural", "expect": ["services/shipping/tracking/tracking.go::TrackShipment"]},
+    {"q": "How does the web cart compute its total?", "kind": "natural", "expect": ["web/src/cart/cart.ts::Cart.totalCents"]},
+    {"q": "How does the checkout page submit an order?", "kind": "natural", "expect": ["web/src/checkout/checkout.ts::submitOrder", "web/src/api/client.ts::placeOrder"]},
+    {"q": "Where does the web client attach the bearer token to API requests?", "kind": "natural", "expect": ["web/src/api/client.ts::apiFetch"]},
+    {"q": "How are prices displayed in the web shop?", "kind": "natural", "expect": ["web/src/utils/format.ts::formatPrice"]},
+    {"q": "Which API endpoint creates an order?", "kind": "natural", "expect": ["fernwood/api/routes.py::create_order"]},
+    {"q": "How does the API work out which customer is calling?", "kind": "paraphrase", "expect": ["fernwood/api/routes.py::current_customer"]},
+    {"q": "Where is the database connection opened?", "kind": "natural", "expect": ["fernwood/dependencies.py::get_database"]},
+    {"q": "How are database transactions committed or rolled back?", "kind": "natural", "expect": ["fernwood/db.py::Database.transaction"]},
+    {"q": "Where are settings read from environment variables?", "kind": "natural", "expect": ["fernwood/config.py::load_settings"]},
+    {"q": "How do we text a customer?", "kind": "paraphrase", "expect": ["fernwood/notifications/sms.py::send_sms", "fernwood/notifications/provider.py::MessagingClient.send_message"]},
+    {"q": "How are the lines of a new order stored?", "kind": "paraphrase", "expect": ["fernwood/orders/repository.py::OrderRepository.save"]},
+    {"q": "hash_password", "kind": "identifier", "expect": ["fernwood/auth/passwords.py::hash_password"]},
+    {"q": "CalculateRate", "kind": "identifier", "expect": ["services/shipping/rates/rates.go::CalculateRate"]},
+    {"q": "totalCents", "kind": "identifier", "expect": ["web/src/cart/cart.ts::Cart.totalCents"]},
+    {"q": "apply_discounts", "kind": "identifier", "expect": ["fernwood/pricing/discounts.py::apply_discounts"]},
+    {"q": "OrderRepository.search_orders", "kind": "identifier", "expect": ["fernwood/orders/repository.py::OrderRepository.search_orders"]},
+    {"q": "How do we process Bitcoin payments?", "kind": "unanswerable", "expect": []},
+    {"q": "Where are product images resized?", "kind": "unanswerable", "expect": []},
+    {"q": "How is the product recommendation model trained?", "kind": "unanswerable", "expect": []},
+    {"q": "What is the Kubernetes autoscaling configuration?", "kind": "unanswerable", "expect": []},
+    {"q": "How does the GraphQL schema define the Product type?", "kind": "unanswerable", "expect": []},
+    {"q": "How are gift cards redeemed?", "kind": "unanswerable", "expect": []},
+    {"q": "Where do we translate the site into French?", "kind": "unanswerable", "expect": []}
+  ],
+  "impact": {
+    "changed": [
+      "fernwood/pricing/tax.py::calculate_tax",
+      "fernwood/orders/repository.py::OrderRepository.search_orders",
+      "fernwood/orders/service.py::calculate_order_total"
+    ],
+    "added": ["fernwood/promotions/coupons.py::apply_coupon", "fernwood/promotions/coupons.py::_signature_valid"],
+    "removed": ["fernwood/pricing/discounts.py::legacy_discount"],
+    "impacted": ["fernwood/orders/service.py::place_order", "fernwood/api/routes.py::create_order"],
+    "tests_to_run": [
+      "tests/test_pricing.py::test_tax_rounds_half_up",
+      "tests/test_pricing.py::test_unknown_region_is_rejected",
+      "tests/test_orders.py::test_order_total_includes_tax"
+    ],
+    "new_findings": [
+      {"rule": "hardcoded-secret", "path": "fernwood/promotions/coupons.py"},
+      {"rule": "high-complexity", "path": "fernwood/promotions/coupons.py"}
+    ],
+    "fixed_findings": [
+      {"rule": "sql-injection", "path": "fernwood/orders/repository.py"},
+      {"rule": "dead-code", "path": "fernwood/pricing/discounts.py"}
+    ]
+  }
+}
