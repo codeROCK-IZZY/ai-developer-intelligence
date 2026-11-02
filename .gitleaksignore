@@ -1,2 +1,2 @@
-# False positive: "6-token shingles, 128-permutation MinHash" in docs/DESIGN.md (reworded in e48b827)
 3245cade7407f316d96901e6228f68ed74e44311:docs/DESIGN.md:generic-api-key:83
+d708fc73cc8083feb2615f8ed9d1a2d1bc250218:.gitleaksignore:generic-api-key:1
